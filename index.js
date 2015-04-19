@@ -5,6 +5,7 @@ var io 		= require('socket.io')(http);
 var cylon 	= require('cylon');
 var request = require('request');	
 var config	= require('./config');
+var moment 	= require('moment-timezone');
 
 app.use(express.static('public'));
 
@@ -19,6 +20,7 @@ http.listen(3000, function(){
 
 var wunderground_api_key = config.wundergroundKey;
 var pinoccio_api_key = config.pinoccioKey;
+var timezone = null;
 
 var lightSun = 'https://api.pinocc.io/v1/3/1/command/pixels.sun?token=' + pinoccio_api_key;
 var lightMoon = 'https://api.pinocc.io/v1/3/1/command/pixels.moon?token=' + pinoccio_api_key;
@@ -126,9 +128,10 @@ io.on('connection', function(socket){
 		var lat = result.lat;
 		var lon = result.lon;
 
+		timezone = result.tz;
+
 		get_weather(lat, lon);
 		get_astronomy(lat, lon);
-
 		
 		setInterval(function () {
 			console.log('An hour has passed. Reobserving the weather...');
@@ -198,11 +201,11 @@ io.on('connection', function(socket){
 	function process_astronomy(observation) {
 		var hour = new Date().getHours();
 		
-		console.log(observation);
-		
 		var sunrise = observation.sun_phase.sunrise.hour;
 		var sunset = observation.sun_phase.sunset.hour;
 		console.log('Locating the sun in the sky...');
+		
+		//console.log(moment.tz.zone(timezone).offset(moment().unix()) / 60);
 
 		if(hour >= sunrise && hour <= sunset) {
 			calculateDaytime(true);

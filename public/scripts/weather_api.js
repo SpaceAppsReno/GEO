@@ -18,23 +18,24 @@ function auto_complete(query) {
 			$('#suggest').empty();
 			var cities = result.RESULTS;
 			$(cities).each( function (i) {
-				$('#suggest').append('<li><a href="javascript:get_conditions(\'' + cities[i].name + '\', ' + cities[i].lat + ', ' + cities[i].lon + ');">' + cities[i].name + '</a></li>');
+				$('#suggest').append('<li><a href="javascript:get_conditions(\'' + cities[i].name + '\', ' + cities[i].lat + ', ' + cities[i].lon + ', \'' + cities[i].tz + '\');">' + cities[i].name + '</a></li>');
 			});
 		}
 	});
 }
 
-function get_conditions(city, lat, lon) {
+function get_conditions(city, lat, lon, tz) {
 	$('#city').val(city);
 	$('#suggest').empty();
 	
 	var jsonCity = { 
 		"cityName" : city,
 		"lat" : lat,
-		"lon" : lon
+		"lon" : lon,
+		"tz" : tz
  	};
 
-	console.log(city, lat, lon);
+	console.log(city, lat, lon, tz);
 	
 	socket.emit('city event', jsonCity);
 	
