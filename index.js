@@ -22,9 +22,9 @@ var wunderground_api_key = config.wundergroundKey;
 var pinoccio_api_key = config.pinoccioKey;
 var timezone = null;
 
-var lightSun = 'https://api.pinocc.io/v1/3/1/command/pixels.sun?token=' + pinoccio_api_key;
-var lightMoon = 'https://api.pinocc.io/v1/3/1/command/pixels.moon?token=' + pinoccio_api_key;
-var lightning = 'https://api.pinocc.io/v1/3/1/command/pixels.lightning?token=' + pinoccio_api_key;
+var lightSun = 'https://api.pinocc.io/v1/4/1/command/pixels.sun?token=' + pinoccio_api_key;
+var lightMoon = 'https://api.pinocc.io/v1/4/1/command/pixels.moon?token=' + pinoccio_api_key;
+var lightning = 'https://api.pinocc.io/v1/4/1/command/pixels.lightning?token=' + pinoccio_api_key;
 
 
 
