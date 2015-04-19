@@ -23,3 +23,19 @@ function auto_complete(query) {
 		}
 	});
 }
+
+function get_conditions(city, lat, lon) {
+	$('#city').val(city);
+	$('#suggest').empty();
+	
+	var jsonCity = { 
+		"cityName" : city,
+		"lat" : lat,
+		"lon" : lon
+ 	};
+
+	console.log(city, lat, lon);
+	
+	socket.emit('city event', jsonCity);
+	
+};

@@ -19,8 +19,8 @@
 </section>
 
 <button id="rain">Rain</button>
-<button id="sunrise">Sunrise</button>
-<button id="sunset">Sunset</button>
+<button id="sunrise">Day</button>
+<button id="sunset">Night</button>
 <button id="clouds">Clouds</button>
 
 <ul id="messages"></ul>
@@ -85,6 +85,15 @@ socket.on('rain', function (msg) {
 
 socket.on('daytime', function (msg) {
 	$('#messages').append($('<li>').text('Daytime: ' + msg));
+	if(msg === true) {
+		sunrise = true;
+		$('#sunrise').addClass('active');
+		$('#sunset').removeClass('active');
+	} else {
+		sunrise = false;
+		$('#sunset').addClass('active');
+		$('#sunrise').removeClass('active');
+	}
 });
 
 socket.on('sunrise', function (msg) {
