@@ -1,0 +1,80 @@
+html, body {
+	background: #fff;
+	text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 20px;
+}
+
+body {
+	width: 600px;
+	margin: 200px auto;
+	padding: 0;
+}
+
+html, ul, li {
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	outline: none;
+	text-decoration: none;
+}
+
+li {
+	list-style-type: none;
+}
+
+#city {
+	width: 370px;
+	margin: 0 auto;
+	padding: .3em 15px;
+	font-size: 24px;
+}
+
+#suggest {
+	border: 1px solid #ccc;
+	border-width: 0 1px;
+	width: 400px;
+	margin: 0 auto;
+}
+
+#suggest a {
+	background: #fff;
+	border-bottom: 1px solid #ccc;
+	padding: .3em .6em;
+	display: block;
+	color: #999;
+	text-align: left;
+}
+
+#suggest a:hover {
+	background: #eee;
+}
+
+.conditions {
+	display: none;
+}
+
+button {
+	background: #ccc;
+	border: 0;
+	border-radius: 15px;
+	width: 100px;
+	margin: 50px 10px 0;
+	padding: 25px 0;
+	font-size: 20px;
+}
+
+button:focus {
+	outline: none;
+}
+
+button.active {
+	background: green;
+	color: #fff;
+}
+
+#messages {
+	margin: 50px 0 0;
+}

@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+<title>GEO</title>
+<link rel="stylesheet" type="text/css" href="styles/style.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
+<script src="scripts/weather_api.js"></script>
+</head>
+<body>
+
+<input autocomplete="off" id="city" placeholder="Enter your city" type="text">
+<ul id="suggest"></ul>
+
+<section class="conditions">
+	<h2>Conditions</h2>
+	<p>Temperature: <span class="temperature"></span></p>
+	<p>Weather: <span class="weather"></span></p>
+</section>
+
+<button id="rain">Rain</button>
+<button id="sunrise">Sunrise</button>
+<button id="sunset">Sunset</button>
+<button id="clouds">Clouds</button>
+
+<ul id="messages"></ul>
+
+<script>
+
+	var rain = false;
+	var sunrise = false;
+	var sunset = false;
+	var clouds = false;
+
+$(document).ready( function () {
+	$('#city').on( 'input', function () {
+		if (city_query != this.value) {
+			city_query = this.value;
+			auto_complete(this.value);
+		}
+	});
+
+	$('#rain').click(function () {
+		rain = !rain;
+		socket.emit('rain', rain);
+		$(this).toggleClass('active');
+	});
+
+	$('#sunrise').click(function () {
+		sunrise = !sunrise;
+		//socket.emit('sunrise', sunrise);
+		$('#sunset').removeClass('active');
+		sunset = false;
+		socket.emit('daytime', true);
+		$(this).toggleClass('active');
+	});
+
+	$('#sunset').click(function () {
+		sunset = !sunset;
+		sunrise = false;
+		$('#sunrise').removeClass('active');
+		//socket.emit('sunset', sunset);
+		socket.emit('daytime', false);
+		$(this).toggleClass('active');
+	});
+
+	$('#clouds').click(function () {
+		clouds = !clouds;
+		socket.emit('clouds', clouds);
+		$(this).toggleClass('active');
+	});
+});
+
+socket.on('rain', function (msg) {
+	$('#messages').append($('<li>').text('Raining: ' + msg));
+	if(msg === true) {
+		rain = true;
+		$('#rain').addClass('active');
+	} else {
+		rain = false;
+		$('#rain').removeClass('active');
+	}
+});
+
+
+socket.on('daytime', function (msg) {
+	$('#messages').append($('<li>').text('Daytime: ' + msg));
+});
+
+socket.on('sunrise', function (msg) {
+	$('#messages').append($('<li>').text('Sunrise: ' + msg));
+	if(msg === true) {
+		sunrise = true;
+		$('#sunrise').addClass('active');
+	} else {
+		sunrise = false;
+		$('#sunrise').removeClass('active');
+	}
+});
+
+socket.on('sunset', function (msg) {
+	$('#messages').append($('<li>').text('Sunset: ' + msg));
+	if(msg === true) {
+		sunset = true;
+		$('#sunset').addClass('active');
+	} else {
+		sunset = false;
+		$('#sunset').removeClass('active');
+	}
+});
+
+socket.on('clouds', function (msg) {
+	$('#messages').append($('<li>').text('Cloudy: ' + msg));
+	if(msg === true) {
+		clouds = true;
+		$('#clouds').addClass('active');
+	} else {
+		clouds = false;
+		$('#clouds').removeClass('active');
+	}
+});
+</script>
+
+</body>
+</html>
